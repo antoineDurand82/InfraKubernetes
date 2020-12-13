@@ -4,7 +4,7 @@ metadata:
   name: monitoring-quota
 spec:
   hard:
-    requests.cpu: "1"
-    requests.memory: 1Gi
-    limits.cpu: "1"
-    limits.memory: 2Gi
+    requests.cpu: 205m
+    requests.memory: 260Mi
+    limits.cpu: 205m
+    limits.memory: 260Mi
