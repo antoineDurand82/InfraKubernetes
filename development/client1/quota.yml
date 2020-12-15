@@ -4,7 +4,7 @@ metadata:
   name: client1-development-quota
 spec:
   hard:
-    requests.cpu: "1"
-    requests.memory: 1Gi
-    limits.cpu: "1"
-    limits.memory: 2Gi
+    requests.cpu: 650M
+    requests.memory: 1250Mi
+    limits.cpu: 700M
+    limits.memory: 1500Mi

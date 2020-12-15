@@ -1,0 +1,6 @@
+mariadb.enabled: false
+externalDatabase.host: client1-development-mysql-0
+externalDatabase.user: root
+externalDatabase.password: root
+externalDatabase.database: root
+externalDatabase.port: 3306

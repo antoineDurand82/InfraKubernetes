@@ -1,37 +1,77 @@
-apiVersion: apps/v1
+apiVersion: apps/v1 # for versions before 1.9.0 use apps/v1beta2
 kind: Deployment
 metadata:
-    name: client1-development-wordpress
-    labels:
-        app: client1-development-wordpress
-        env: development
+  name: wordpress
+  labels:
+    app: wordpress
 spec:
-    replicas: 1
-    selector:
-      matchLabels:
-        app: client1-development-wordpress
-    template:
-      metadata:
-        labels:
-          app: client1-development-wordpress
-      spec:
-        containers:
-          - name: wordpress
-            image: wordpress
-            env:
-            - name: WORDPRESS_DB_HOST
-              value: wordpress-mysql
-            - name: WORDPRESS_DB_PASSWORD
-              valueFrom:
-                secretKeyRef:
-                  name: mysql-pass
-                  key: password
-            ports:
-              - containerPort: 80
-            resources:
-              limits:
-                memory: 128Mi
-                cpu: "100m"
-              requests:
-                memory: 128Mi
-                cpu: "100m"
+  selector:
+    matchLabels:
+      app: wordpress
+      tier: frontend
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: wordpress
+        tier: frontend
+    spec:
+      containers:
+      - image: wordpress:4.8-apache
+        name: wordpress
+        env:
+        - name: client1-development-mysql
+          value: wordpress-mysql
+        - name: WORDPRESS_DB_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: client1-development-auth
+              key: password
+        ports:
+        - containerPort: 80
+          name: wordpress
+        resources:
+          limits:
+            memory: 512Mi
+            cpu: 300m
+          requests:
+            memory: 512Mi
+            cpu: 300m
+# apiVersion: apps/v1
+# kind: Deployment
+# metadata:
+#     name: client1-development-wordpress
+#     labels:
+#         app: client1-development-wordpress
+#         env: development
+# spec:
+#     replicas: 1
+#     selector:
+#       matchLabels:
+#         app: client1-development-wordpress
+#     template:
+#       metadata:
+#         labels:
+#           app: client1-development-wordpress
+#       spec:
+#         containers:
+#           - name: wordpress
+#             image: wordpress
+#             env:
+#             - name: WORDPRESS_DB_HOST
+#               value: wordpress-mysql
+#             - name: WORDPRESS_DB_PASSWORD
+#               valueFrom:
+#                 secretKeyRef:
+#                   name: mysql-pass
+#                   key: password
+#             ports:
+#               - containerPort: 80
+#             resources:
+#               limits:
+#                 memory: 128Mi
+#                 cpu: "100m"
+#               requests:
+#                 memory: 128Mi
+#                 cpu: "100m"

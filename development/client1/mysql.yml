@@ -1,0 +1,21 @@
+apiVersion: kubedb.com/v1alpha2
+kind: MySQL
+metadata:
+  name: client1-development-mysql
+spec:
+  authSecret:
+    name: client1-development-auth
+  version: "8.0.21"
+  storageType: Durable
+  storage:
+    storageClassName: "standard"
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      limits:
+        memory: 512Mi
+        cpu: 250m
+      requests:
+        storage: 1Gi
+        memory: 512Mi
+        cpu: 250m
